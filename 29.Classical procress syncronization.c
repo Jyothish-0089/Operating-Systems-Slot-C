@@ -1,84 +1,33 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-int mutex = 1;
-
-int full = 0;
-
-int empty = 10, x = 0;
-
-void producer()
-{
-
-	--mutex;
-
-	++full;
-
-	--empty;
-
-	x++;
-	printf("\nProducer produces"
-		"item %d",
-		x);
-
-	++mutex;
-}
-
-void consumer()
-{
-	--mutex;
-
-	--full;
-
-	++empty;
-	printf("\nConsumer consumes "
-		"item %d",
-		x);
-	x--;
-
-	++mutex;
-}
-
-int main()
-{
-	int n, i;
-	printf("\n1. Press 1 for Producer"
-		"\n2. Press 2 for Consumer"
-		"\n3. Press 3 for Exit");
-
-	for (i = 1; i > 0; i++) {
-
-		printf("\nEnter your choice:");
-		scanf("%d", &n);
-
-		switch (n) {
-		case 1:
-
-			if ((mutex == 1)
-				&& (empty != 0)) {
-				producer();
+#include<stdio.h>
+int main(){
+	int choice,p,c,range=0,i,arr[50];
+	while(choice!=4){
+		printf("1.Produce   2.Consume   3.Display Buffer    4.Exit\n");
+		printf("Choice: ");
+		scanf("%d",&choice);
+		if(choice==1){
+			printf("Produce value: ");
+			scanf("%d",&p);
+			printf("-->Produced %d\n",p);
+			arr[range]=p;
+			range++;
+		}
+		if(choice==2){
+			if(range==0){
+				printf("Empty Buffer you idiot...\n");
 			}
-
-			else {
-				printf("Buffer is full!");
+			else{
+				printf("-->Consumed %d\n",p);
+				range--;
+		    }
+		}
+		if(choice==3){
+			printf("\nBuffer: [");
+			for(i=0;i<range;i++){
+				printf("%d ",arr[i]);
 			}
-			break;
-
-		case 2:
-
-			if ((mutex == 1)
-				&& (full != 0)) {
-				consumer();
-			}
-
-			else {
-				printf("Buffer is empty!");
-			}
-			break;
-
-		case 3:
-			exit(0);
-			break;
+			printf("]\n");
 		}
 	}
+	
 }
